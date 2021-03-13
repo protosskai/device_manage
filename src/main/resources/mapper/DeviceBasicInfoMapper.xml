@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.project.dao.DeviceBasicInfoMapper">
+  <resultMap id="BaseResultMap" type="com.company.project.model.DeviceBasicInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="is_scraped" jdbcType="INTEGER" property="isScraped" />
+    <result column="principal_user_id" jdbcType="INTEGER" property="principalUserId" />
+    <result column="is_maintain" jdbcType="INTEGER" property="isMaintain" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_lended" jdbcType="INTEGER" property="isLended" />
+    <result column="is_reverse" jdbcType="INTEGER" property="isReverse" />
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+  </resultMap>
+</mapper>
