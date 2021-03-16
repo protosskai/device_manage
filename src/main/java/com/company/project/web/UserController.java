@@ -1,21 +1,21 @@
 package com.company.project.web;
+
 import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
+import com.company.project.model.Token;
 import com.company.project.model.User;
+import com.company.project.model.UserInfo;
 import com.company.project.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
-* Created by CodeGenerator on 2021/03/13.
-*/
+ * Created by CodeGenerator on 2021/03/13.
+ */
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -52,5 +52,24 @@ public class UserController {
         List<User> list = userService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
+    }
+
+    @PostMapping("/login")
+    public Result login() {
+        Token token = new Token();
+        token.setToken("admin-token");
+        return ResultGenerator.genSuccessResult(token);
+    }
+
+    @GetMapping("/info")
+    public Result info(@RequestParam String token) {
+        UserInfo userInfo = new UserInfo();
+        String[] roles = new String[1];
+        roles[0] = "editor";
+        userInfo.setRoles(roles);
+        userInfo.setAvatar("https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        userInfo.setIntroduction("I am a super administrator");
+        userInfo.setName("Super Admin");
+        return ResultGenerator.genSuccessResult(userInfo);
     }
 }
