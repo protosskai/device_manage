@@ -8,7 +8,15 @@ public class DeviceMaintainInfoVo {
     private int deviceId;
     private String deviceName;
     private String maintainOwner;
+    private int isMaintain;
 
+    public int getIsMaintain() {
+        return isMaintain;
+    }
+
+    public void setIsMaintain(int isMaintain) {
+        this.isMaintain = isMaintain;
+    }
 
     private String startTime;
 

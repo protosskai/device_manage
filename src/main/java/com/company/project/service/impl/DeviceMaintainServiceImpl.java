@@ -63,7 +63,7 @@ public class DeviceMaintainServiceImpl extends AbstractService<DeviceMaintain> i
             String finishedTime = "";
             String status = "";
             if (isMaintain == 1) {
-                DeviceMaintain deviceMaintain = deviceMaintainService.findBy("deviceId", deviceId);
+                DeviceMaintain deviceMaintain = this.findBy("deviceId", deviceId);
                 Preconditions.checkNotNull(deviceMaintain, "给定的设备ID[" + deviceId + "]不存在相应的设备");
                 User user = userService.findById(deviceMaintain.getMaintainUserId());
                 Preconditions.checkNotNull(user, "给定的用户ID[" + deviceMaintain.getMaintainUserId() + "]不存在相应的用户");
@@ -79,6 +79,7 @@ public class DeviceMaintainServiceImpl extends AbstractService<DeviceMaintain> i
             maintainInfoVo.setStartTime(startTime);
             maintainInfoVo.setFinishedTime(finishedTime);
             maintainInfoVo.setStatus(status);
+            maintainInfoVo.setIsMaintain(isMaintain);
             if (querySelect == 0) {
                 res.add(maintainInfoVo);
             } else if (querySelect == 1) {

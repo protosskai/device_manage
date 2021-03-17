@@ -23,7 +23,7 @@ import java.util.List;
  * Created by CodeGenerator on 2021/03/13.
  */
 @RestController
-@RequestMapping("/device")
+@RequestMapping("/device/info")
 public class DeviceBasicInfoController {
     @Resource
     private DeviceBasicInfoService deviceBasicInfoService;
