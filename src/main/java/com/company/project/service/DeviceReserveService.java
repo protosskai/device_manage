@@ -1,6 +1,9 @@
 package com.company.project.service;
 import com.company.project.model.DeviceReserve;
 import com.company.project.core.Service;
+import com.company.project.vo.DeviceReverseInfoVo;
+
+import java.util.List;
 
 
 /**
@@ -8,4 +11,5 @@ import com.company.project.core.Service;
  */
 public interface DeviceReserveService extends Service<DeviceReserve> {
 
+    List<DeviceReverseInfoVo> getReverseInfoVoList(Integer querySelected);
 }

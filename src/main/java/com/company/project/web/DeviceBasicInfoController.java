@@ -12,10 +12,10 @@ import com.company.project.vo.DeviceInfoVo;
 import com.company.project.vo.DeviceMaintainInfoVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.google.common.base.Preconditions;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +63,8 @@ public class DeviceBasicInfoController {
         List<DeviceInfoVo> voList = new ArrayList<>();
         for (DeviceBasicInfo info : list) {
             DeviceInfoVo infoVo = new DeviceInfoVo();
+            String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(info.getCreateTime());
+            infoVo.setCreateTime(createTime);
             infoVo.setId(info.getId());
             infoVo.setDeviceName(info.getDeviceName());
             infoVo.setIsScraped(info.getIsScraped());

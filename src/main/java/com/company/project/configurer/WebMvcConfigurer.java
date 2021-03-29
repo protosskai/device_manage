@@ -19,6 +19,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.company.project.core.Result;
 import com.company.project.core.ResultCode;
 import com.company.project.core.ServiceException;
+import com.company.project.interceptor.TokenInterceptor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -132,6 +133,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                 }
             });
         }
+        registry.addInterceptor(new TokenInterceptor()).addPathPatterns("/**");
     }
 
     private void responseResult(HttpServletResponse response, Result result) {

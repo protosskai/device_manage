@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.company.project.dao.DeviceLendMapper">
-  <resultMap id="BaseResultMap" type="com.company.project.model.DeviceLend">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="device_id" jdbcType="INTEGER" property="deviceId" />
-    <result column="lend_user_id" jdbcType="INTEGER" property="lendUserId" />
-    <result column="lend_time" jdbcType="TIMESTAMP" property="lendTime" />
-    <result column="expect_return_time" jdbcType="TIMESTAMP" property="expectReturnTime" />
-    <result column="return_time" jdbcType="TIMESTAMP" property="returnTime" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.company.project.model.DeviceLend">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="device_id" jdbcType="INTEGER" property="deviceId"/>
+        <result column="lend_user_id" jdbcType="INTEGER" property="lendUserId"/>
+        <result column="lend_time" jdbcType="TIMESTAMP" property="lendTime"/>
+        <result column="expect_return_time" jdbcType="TIMESTAMP" property="expectReturnTime"/>
+        <result column="return_time" jdbcType="TIMESTAMP" property="returnTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="detail" jdbcType="LONGVARCHAR" property="detail"/>
+    </resultMap>
+    <select id="selectByUserIdAndDeviceId" resultMap="BaseResultMap">
+        select * from device_lend where lend_user_id = #{userId} and device_id = #{deviceId}
+        order by create_time desc limit 1
+    </select>
 </mapper>

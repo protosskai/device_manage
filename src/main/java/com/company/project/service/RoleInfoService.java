@@ -1,6 +1,9 @@
 package com.company.project.service;
 import com.company.project.model.RoleInfo;
 import com.company.project.core.Service;
+import com.company.project.vo.RoleInfoVo;
+
+import java.util.List;
 
 
 /**
@@ -8,4 +11,7 @@ import com.company.project.core.Service;
  */
 public interface RoleInfoService extends Service<RoleInfo> {
 
+    List<RoleInfoVo> getRoleInfoVoList(Integer querySelect);
+
+    void addRole(RoleInfoVo roleInfo);
 }

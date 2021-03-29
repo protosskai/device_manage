@@ -6,6 +6,8 @@ import com.company.project.model.Token;
 import com.company.project.model.User;
 import com.company.project.model.UserInfo;
 import com.company.project.service.UserService;
+import com.company.project.vo.LabInfoVo;
+import com.company.project.vo.UserInfoVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
@@ -46,10 +48,10 @@ public class UserController {
         return ResultGenerator.genSuccessResult(user);
     }
 
-    @PostMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
+    @GetMapping("/list")
+    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size, @RequestParam(defaultValue = "0") Integer querySelect) {
         PageHelper.startPage(page, size);
-        List<User> list = userService.findAll();
+        List<UserInfoVo> list = userService.getUserInfoVoList(querySelect);
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }

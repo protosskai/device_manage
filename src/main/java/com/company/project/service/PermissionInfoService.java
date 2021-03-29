@@ -1,6 +1,9 @@
 package com.company.project.service;
 import com.company.project.model.PermissionInfo;
 import com.company.project.core.Service;
+import com.company.project.vo.PermissionInfoVo;
+
+import java.util.List;
 
 
 /**
@@ -8,4 +11,5 @@ import com.company.project.core.Service;
  */
 public interface PermissionInfoService extends Service<PermissionInfo> {
 
+    List<PermissionInfoVo> getPermissionInfoVoList(Integer querySelect);
 }

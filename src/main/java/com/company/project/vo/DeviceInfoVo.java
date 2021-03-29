@@ -13,6 +13,7 @@ public class DeviceInfoVo {
     private int isScraped;
     // 设备详情
     private String detail;
+    private String createTime;
 
     public String getDetail() {
         return detail;
@@ -62,4 +63,13 @@ public class DeviceInfoVo {
     public void setIsScraped(int isScraped) {
         this.isScraped = isScraped;
     }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
 }
