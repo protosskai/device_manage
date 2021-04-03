@@ -1,4 +1,5 @@
 package com.company.project.service;
+
 import com.company.project.model.DeviceBasicInfo;
 import com.company.project.core.Service;
 import com.company.project.vo.DeviceInfoVo;
@@ -9,4 +10,6 @@ import com.company.project.vo.DeviceInfoVo;
  */
 public interface DeviceBasicInfoService extends Service<DeviceBasicInfo> {
     public DeviceBasicInfo addDevice(DeviceInfoVo deviceInfoVo);
+
+    public DeviceInfoVo infoToVo(DeviceBasicInfo info);
 }

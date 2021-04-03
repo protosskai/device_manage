@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 
@@ -40,5 +41,22 @@ public class DeviceBasicInfoServiceImpl extends AbstractService<DeviceBasicInfo>
         deviceBasicInfo.setUuid(uuid);
         this.save(deviceBasicInfo);
         return deviceBasicInfo;
+    }
+
+    @Override
+    public DeviceInfoVo infoToVo(DeviceBasicInfo info) {
+        DeviceInfoVo infoVo = new DeviceInfoVo();
+        String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(info.getCreateTime());
+        infoVo.setCreateTime(createTime);
+        infoVo.setId(info.getId());
+        infoVo.setDeviceName(info.getDeviceName());
+        infoVo.setIsScraped(info.getIsScraped());
+        infoVo.setIsScraped(info.getIsScraped());
+        infoVo.setUuid(info.getUuid());
+        User user = userService.findById(info.getPrincipalUserId());
+        if (user != null) {
+            infoVo.setPrincipalUser(user.getUserName());
+        }
+        return infoVo;
     }
 }

@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.company.project.dao.DeviceMaintainMapper">
-  <resultMap id="BaseResultMap" type="com.company.project.model.DeviceMaintain">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="device_id" jdbcType="INTEGER" property="deviceId" />
-    <result column="maintain_user_id" jdbcType="INTEGER" property="maintainUserId" />
-    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
-    <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
-    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.company.project.model.DeviceMaintain">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="device_id" jdbcType="INTEGER" property="deviceId"/>
+        <result column="maintain_user_id" jdbcType="INTEGER" property="maintainUserId"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="finish_time" jdbcType="TIMESTAMP" property="finishTime"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
+    </resultMap>
+
+    <select id="selectByDeviceIdAndUserId" resultMap="BaseResultMap">
+        select * from device_maintain where device_id = #{deviceId} and maintain_user_id = #{userId}
+        and is_deleted = 0
+    </select>
+
+    <select id="selectByDeviceId" resultMap="BaseResultMap">
+        select * from device_maintain where device_id = #{deviceId}
+        and is_deleted = 0 limit 1
+    </select>
 </mapper>

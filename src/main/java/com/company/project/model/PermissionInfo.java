@@ -36,12 +36,6 @@ public class PermissionInfo {
     private Date updateTime;
 
     /**
-     * 模块名
-     */
-    @Column(name = "module_name")
-    private String moduleName;
-
-    /**
      * 获取主键ID
      *
      * @return id - 主键ID
@@ -129,23 +123,5 @@ public class PermissionInfo {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    /**
-     * 获取模块名
-     *
-     * @return module_name - 模块名
-     */
-    public String getModuleName() {
-        return moduleName;
-    }
-
-    /**
-     * 设置模块名
-     *
-     * @param moduleName 模块名
-     */
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
     }
 }

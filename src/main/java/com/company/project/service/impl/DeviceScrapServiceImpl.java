@@ -1,5 +1,7 @@
 package com.company.project.service.impl;
 
+import com.company.project.core.Result;
+import com.company.project.core.ResultGenerator;
 import com.company.project.dao.DeviceScrapMapper;
 import com.company.project.model.DeviceBasicInfo;
 import com.company.project.model.DeviceScrap;
@@ -72,5 +74,24 @@ public class DeviceScrapServiceImpl extends AbstractService<DeviceScrap> impleme
             }
         }
         return res;
+    }
+
+    @Override
+    public Result startScrapDevice(Integer userId, Integer deviceId) {
+        DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
+        if (deviceBasicInfo == null)
+            return ResultGenerator.genFailResult("设备不存在！");
+        if (deviceBasicInfo.getIsScraped() == 1)
+            return ResultGenerator.genFailResult("当前设备已报废");
+        User user = userService.findById(userId);
+        if (user == null)
+            return ResultGenerator.genFailResult("用户不存在！");
+        deviceBasicInfo.setIsScraped(1);
+        deviceBasicInfoService.update(deviceBasicInfo);
+        DeviceScrap deviceScrap = new DeviceScrap();
+        deviceScrap.setDeviceId(deviceId);
+        deviceScrap.setScrapUserId(userId);
+        this.save(deviceScrap);
+        return ResultGenerator.genSuccessResult();
     }
 }

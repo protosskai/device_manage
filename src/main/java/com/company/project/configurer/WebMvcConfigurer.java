@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +21,13 @@ import com.company.project.core.Result;
 import com.company.project.core.ResultCode;
 import com.company.project.core.ServiceException;
 import com.company.project.interceptor.TokenInterceptor;
+import com.company.project.service.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -109,6 +112,17 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                 .maxAge(3600);
     }
 
+    @Resource
+    public UserRoleService userRoleService;
+    @Resource
+    public SysTokenService sysTokenService;
+    @Resource
+    public RolePermissionService rolePermissionService;
+    @Resource
+    public UserService userService;
+    @Resource
+    public PermissionInfoService permissionInfoService;
+
     //添加拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -133,7 +147,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                 }
             });
         }
-        registry.addInterceptor(new TokenInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new TokenInterceptor(userRoleService, sysTokenService, rolePermissionService, userService, permissionInfoService)).addPathPatterns("/**");
     }
 
     private void responseResult(HttpServletResponse response, Result result) {

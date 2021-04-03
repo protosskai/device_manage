@@ -3,20 +3,21 @@ import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
 import com.company.project.model.PermissionInfo;
 import com.company.project.service.PermissionInfoService;
-import com.company.project.vo.PermissionInfoVo;
-import com.company.project.vo.RoleInfoVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
-* Created by CodeGenerator on 2021/03/13.
+* Created by CodeGenerator on 2021/04/01.
 */
 @RestController
-@RequestMapping("/permission")
+@RequestMapping("/permission/info")
 public class PermissionInfoController {
     @Resource
     private PermissionInfoService permissionInfoService;
@@ -45,10 +46,10 @@ public class PermissionInfoController {
         return ResultGenerator.genSuccessResult(permissionInfo);
     }
 
-    @GetMapping("/list")
-    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size, @RequestParam(defaultValue = "0") Integer querySelect) {
+    @PostMapping("/list")
+    public Result list(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "0") Integer size) {
         PageHelper.startPage(page, size);
-        List<PermissionInfoVo> list = permissionInfoService.getPermissionInfoVoList(querySelect);
+        List<PermissionInfo> list = permissionInfoService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }

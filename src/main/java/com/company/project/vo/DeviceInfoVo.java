@@ -14,6 +14,7 @@ public class DeviceInfoVo {
     // 设备详情
     private String detail;
     private String createTime;
+    private String uuid;
 
     public String getDetail() {
         return detail;
@@ -72,4 +73,11 @@ public class DeviceInfoVo {
         this.createTime = createTime;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 }

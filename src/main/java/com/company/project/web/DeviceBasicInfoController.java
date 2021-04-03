@@ -62,17 +62,18 @@ public class DeviceBasicInfoController {
         List<DeviceBasicInfo> list = deviceBasicInfoService.findAll();
         List<DeviceInfoVo> voList = new ArrayList<>();
         for (DeviceBasicInfo info : list) {
-            DeviceInfoVo infoVo = new DeviceInfoVo();
-            String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(info.getCreateTime());
-            infoVo.setCreateTime(createTime);
-            infoVo.setId(info.getId());
-            infoVo.setDeviceName(info.getDeviceName());
-            infoVo.setIsScraped(info.getIsScraped());
-            infoVo.setIsScraped(info.getIsScraped());
-            User user = userService.findById(info.getPrincipalUserId());
-            if (user != null) {
-                infoVo.setPrincipalUser(user.getUserName());
-            }
+            DeviceInfoVo infoVo = deviceBasicInfoService.infoToVo(info);
+//            String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(info.getCreateTime());
+//            infoVo.setCreateTime(createTime);
+//            infoVo.setId(info.getId());
+//            infoVo.setDeviceName(info.getDeviceName());
+//            infoVo.setIsScraped(info.getIsScraped());
+//            infoVo.setIsScraped(info.getIsScraped());
+//            infoVo.setUuid(info.getUuid());
+//            User user = userService.findById(info.getPrincipalUserId());
+//            if (user != null) {
+//                infoVo.setPrincipalUser(user.getUserName());
+//            }
             voList.add(infoVo);
         }
         PageInfo pageInfo = new PageInfo(voList);
@@ -85,5 +86,13 @@ public class DeviceBasicInfoController {
         List<DeviceMaintainInfoVo> res = deviceMaintainService.getMaintainList(querySelect);
         PageInfo pageInfo = new PageInfo(res);
         return ResultGenerator.genSuccessResult(pageInfo);
+    }
+
+    @GetMapping("queryDeviceInfo")
+    public Result queryDeviceInfo(@RequestParam() String uuid) {
+        DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findBy("uuid", uuid);
+        if (deviceBasicInfo == null)
+            return ResultGenerator.genFailResult("设备不存在！");
+        return ResultGenerator.genSuccessResult(deviceBasicInfoService.infoToVo(deviceBasicInfo));
     }
 }

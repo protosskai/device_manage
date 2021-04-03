@@ -1,4 +1,6 @@
 package com.company.project.service;
+
+import com.company.project.core.Result;
 import com.company.project.model.DeviceMaintain;
 import com.company.project.core.Service;
 import com.company.project.vo.DeviceMaintainInfoVo;
@@ -13,4 +15,8 @@ public interface DeviceMaintainService extends Service<DeviceMaintain> {
     public DeviceMaintainInfoVo getDeviceMaintainVo(DeviceMaintain deviceMaintain);
 
     public List<DeviceMaintainInfoVo> getMaintainList(Integer querySelect);
+
+    public Result startMaintainDevice(Integer userId, Integer deviceId);
+
+    public Result stopMaintainDevice(Integer userId, Integer deviceId);
 }

@@ -1,4 +1,5 @@
 package com.company.project.web;
+
 import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
 import com.company.project.model.DeviceReserve;
@@ -13,8 +14,8 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
-* Created by CodeGenerator on 2021/03/13.
-*/
+ * Created by CodeGenerator on 2021/03/13.
+ */
 @RestController
 @RequestMapping("/device/reserve")
 public class DeviceReserveController {
@@ -60,4 +61,11 @@ public class DeviceReserveController {
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
+
+    @GetMapping("/startReverse")
+    public Result startReverse(@RequestParam Integer userId, @RequestParam Integer deviceId) {
+        return deviceReserveService.startReverseDevice(userId, deviceId);
+    }
+
+
 }

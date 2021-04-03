@@ -52,4 +52,14 @@ public class DeviceMaintainController {
         PageInfo pageInfo = new PageInfo(res);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
+
+    @GetMapping("/startMaintainDevice")
+    public Result startMaintainDevice(@RequestParam Integer deviceId, @RequestParam Integer userId) {
+        return deviceMaintainService.startMaintainDevice(userId, deviceId);
+    }
+
+    @GetMapping("/stopMaintainDevice")
+    public Result stopMaintainDevice(@RequestParam Integer deviceId, @RequestParam Integer userId) {
+        return deviceMaintainService.stopMaintainDevice(userId, deviceId);
+    }
 }
