@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80023
 File Encoding         : 65001
 
-Date: 2021-03-12 13:30:35
+Date: 2021-04-08 17:10:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,4 +32,4 @@ CREATE TABLE `device_basic_info` (
   `is_lended` int NOT NULL DEFAULT '0' COMMENT '是否借出',
   `is_reverse` int NOT NULL DEFAULT '0' COMMENT '是否被预定',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;

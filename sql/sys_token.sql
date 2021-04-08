@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80023
 File Encoding         : 65001
 
-Date: 2021-03-18 14:16:45
+Date: 2021-04-08 17:12:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,4 +26,4 @@ CREATE TABLE `sys_token` (
   `token` varchar(255) NOT NULL COMMENT 'token',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
