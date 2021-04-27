@@ -54,6 +54,9 @@ public class DeviceLend {
     @Column(name = "update_time")
     private Date updateTime;
 
+    @Column(name = "is_deleted")
+    private Integer isDeleted;
+
     /**
      * 借出详情
      */
@@ -201,6 +204,20 @@ public class DeviceLend {
      */
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    /**
+     * @return is_deleted
+     */
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    /**
+     * @param isDeleted
+     */
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     /**

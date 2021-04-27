@@ -57,4 +57,10 @@ public class DeviceScrapController {
     public Result scrapDevice(@RequestParam Integer userId, @RequestParam Integer deviceId) {
         return deviceScrapService.startScrapDevice(userId, deviceId);
     }
+
+    @GetMapping("/stopScrapDevice")
+    public Result stopScrapDevice(@RequestParam Integer userId, @RequestParam Integer deviceId) {
+        return deviceScrapService.stopScrapDevice(userId, deviceId);
+    }
+
 }

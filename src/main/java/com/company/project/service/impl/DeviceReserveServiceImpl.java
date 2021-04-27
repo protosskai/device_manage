@@ -1,6 +1,7 @@
 package com.company.project.service.impl;
 
 import com.company.project.core.Result;
+import com.company.project.core.ResultGenerator;
 import com.company.project.dao.DeviceReserveMapper;
 import com.company.project.model.DeviceBasicInfo;
 import com.company.project.model.DeviceLend;
@@ -81,6 +82,11 @@ public class DeviceReserveServiceImpl extends AbstractService<DeviceReserve> imp
 
     @Override
     public Result startReverseDevice(Integer userId, Integer deviceId) {
-        return null;
+        return ResultGenerator.genSuccessResult();
+    }
+
+    @Override
+    public Result stopReverseDevice(Integer userId, Integer deviceId) {
+        return ResultGenerator.genSuccessResult();
     }
 }

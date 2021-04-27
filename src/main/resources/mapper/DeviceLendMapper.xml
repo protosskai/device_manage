@@ -13,10 +13,21 @@
         <result column="return_time" jdbcType="TIMESTAMP" property="returnTime"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted"/>
         <result column="detail" jdbcType="LONGVARCHAR" property="detail"/>
     </resultMap>
     <select id="selectByUserIdAndDeviceId" resultMap="BaseResultMap">
         select * from device_lend where lend_user_id = #{userId} and device_id = #{deviceId}
         order by create_time desc limit 1
+    </select>
+
+    <select id="selectsByUserIdAndDeviceId" resultMap="BaseResultMap">
+        select * from device_lend where lend_user_id = #{userId} and device_id = #{deviceId}
+        order by create_time desc
+    </select>
+
+    <select id="selectByDeviceId" resultMap="BaseResultMap">
+        select * from device_lend where device_id = #{deviceId}
+        and is_deleted = 0 limit 1
     </select>
 </mapper>

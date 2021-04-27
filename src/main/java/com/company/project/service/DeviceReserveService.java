@@ -16,4 +16,6 @@ public interface DeviceReserveService extends Service<DeviceReserve> {
     List<DeviceReverseInfoVo> getReverseInfoVoList(Integer querySelected);
 
     Result startReverseDevice(Integer userId, Integer deviceId);
+
+    Result stopReverseDevice(Integer userId, Integer deviceId);
 }

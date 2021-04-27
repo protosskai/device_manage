@@ -2,6 +2,7 @@ package com.company.project.web;
 
 import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
+import com.company.project.dao.DeviceLendMapper;
 import com.company.project.model.DeviceBasicInfo;
 import com.company.project.model.DeviceLend;
 import com.company.project.model.User;
@@ -27,6 +28,8 @@ public class DeviceLendController {
     private DeviceLendService deviceLendService;
     @Resource
     private DeviceBasicInfoService deviceBasicInfoService;
+    @Resource
+    private DeviceLendMapper deviceLendMapper;
 
 
     @PostMapping("/add")
@@ -72,6 +75,7 @@ public class DeviceLendController {
         deviceLend.setDeviceId(deviceId);
         deviceLend.setLendUserId(userId);
         deviceLend.setDetail(detail);
+        deviceLend.setIsDeleted(0);
         deviceLendService.save(deviceLend);
         deviceLendService.updateDeviceInfoLend(deviceId, 1);
         return ResultGenerator.genSuccessResult();
@@ -86,6 +90,11 @@ public class DeviceLendController {
             return ResultGenerator.genFailResult("设备尚未被借出！");
         deviceBasicInfo.setIsLended(0);
         deviceBasicInfoService.update(deviceBasicInfo);
+        List<DeviceLend> deviceLends = deviceLendMapper.selectsByUserIdAndDeviceId(userId, deviceId);
+        for (DeviceLend deviceLend : deviceLends) {
+            deviceLend.setIsDeleted(1);
+            deviceLendService.update(deviceLend);
+        }
         return ResultGenerator.genSuccessResult();
     }
 }

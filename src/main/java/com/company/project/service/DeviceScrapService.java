@@ -15,4 +15,5 @@ public interface DeviceScrapService extends Service<DeviceScrap> {
     public List<DeviceScrapInfoVo> getScrapInfoVoList(int querySelected);
 
     Result startScrapDevice(Integer userId, Integer deviceId);
+    Result stopScrapDevice(Integer userId, Integer deviceId);
 }

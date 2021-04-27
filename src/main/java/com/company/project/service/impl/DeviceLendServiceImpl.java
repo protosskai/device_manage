@@ -47,7 +47,8 @@ public class DeviceLendServiceImpl extends AbstractService<DeviceLend> implement
             String lendTime = "";
             String detail = "";
             if (isLended == 1) {
-                DeviceLend deviceLend = this.findBy("deviceId", deviceId);
+//                DeviceLend deviceLend = this.findBy("deviceId", deviceId);
+                DeviceLend deviceLend = deviceLendMapper.selectByDeviceId(deviceId);
                 Preconditions.checkNotNull(deviceLend, "给定的设备ID[" + deviceId + "]不存在相应的设备");
                 User user = userService.findById(deviceLend.getLendUserId());
                 Preconditions.checkNotNull(user, "给定的用户ID[" + deviceLend.getLendUserId() + "]不存在相应的用户");

@@ -67,5 +67,10 @@ public class DeviceReserveController {
         return deviceReserveService.startReverseDevice(userId, deviceId);
     }
 
+    @GetMapping("/stopReverse")
+    public Result stopReverse(@RequestParam Integer userId, @RequestParam Integer deviceId) {
+        return deviceReserveService.stopReverseDevice(userId, deviceId);
+    }
+
 
 }
