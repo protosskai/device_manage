@@ -62,6 +62,7 @@ public class DeviceReserveServiceImpl extends AbstractService<DeviceReserve> imp
             reverseInfoVo.setDeviceId(deviceId);
             reverseInfoVo.setDeviceName(deviceName);
             reverseInfoVo.setReserveTime(reserveTime);
+            reverseInfoVo.setReserveUser(reserveUser);
             reverseInfoVo.setExpectReturnTime(expectReturnTime);
             reverseInfoVo.setDetail(detail);
             reverseInfoVo.setIsReverse(isReverse);
@@ -82,11 +83,37 @@ public class DeviceReserveServiceImpl extends AbstractService<DeviceReserve> imp
 
     @Override
     public Result startReverseDevice(Integer userId, Integer deviceId) {
+        DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
+        if (deviceBasicInfo == null)
+            return ResultGenerator.genFailResult("设备不存在！");
+        if (deviceBasicInfo.getIsReverse() == 1)
+            return ResultGenerator.genFailResult("当前设备正处于预约状态");
+        User user = userService.findById(userId);
+        if (user == null)
+            return ResultGenerator.genFailResult("用户不存在！");
+        deviceBasicInfo.setIsReverse(1);
+        deviceBasicInfoService.update(deviceBasicInfo);
+        DeviceReserve deviceReserve = new DeviceReserve();
+        deviceReserve.setDeviceId(deviceId);
+        deviceReserve.setReserveUserId(userId);
+        deviceReserve.setDetail("");
+        this.save(deviceReserve);
         return ResultGenerator.genSuccessResult();
     }
 
     @Override
     public Result stopReverseDevice(Integer userId, Integer deviceId) {
+        DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
+        if (deviceBasicInfo == null)
+            return ResultGenerator.genFailResult("设备不存在！");
+        if (deviceBasicInfo.getIsReverse() == 0)
+            return ResultGenerator.genFailResult("当前设备尚未被预约");
+        User user = userService.findById(userId);
+        if (user == null)
+            return ResultGenerator.genFailResult("用户不存在！");
+        deviceBasicInfo.setIsReverse(0);
+        deviceBasicInfoService.update(deviceBasicInfo);
+        deviceReserveMapper.deleteByUserIdAndDeviceId(userId, deviceId);
         return ResultGenerator.genSuccessResult();
     }
 }
