@@ -18,4 +18,7 @@
     <delete id="deleteByUserIdAndDeviceId">
         delete from device_reserve where device_id=#{deviceId} and reserve_user_id=#{userId}
     </delete>
+    <delete id="deleteByDeviceId">
+        delete from device_reserve where device_id=#{deviceId}
+    </delete>
 </mapper>

@@ -98,14 +98,16 @@ public class DeviceScrapServiceImpl extends AbstractService<DeviceScrap> impleme
     @Override
     public Result stopScrapDevice(Integer userId, Integer deviceId) {
         DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
+        DeviceScrap deviceScrap = this.findBy("deviceId", deviceId);
         if (deviceBasicInfo == null)
             return ResultGenerator.genFailResult("设备不存在！");
-        if (deviceBasicInfo.getIsScraped() == 0)
+        if (deviceBasicInfo.getIsScraped() == 0 || deviceScrap == null)
             return ResultGenerator.genFailResult("当前设备尚未报废");
         User user = userService.findById(userId);
         if (user == null)
             return ResultGenerator.genFailResult("用户不存在！");
         deviceBasicInfo.setIsScraped(0);
+        this.deleteById(deviceScrap.getId());
         deviceBasicInfoService.update(deviceBasicInfo);
         return ResultGenerator.genSuccessResult();
     }

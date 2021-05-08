@@ -6,8 +6,10 @@ import com.company.project.dao.DeviceLendMapper;
 import com.company.project.model.DeviceBasicInfo;
 import com.company.project.model.DeviceLend;
 import com.company.project.model.User;
+import com.company.project.model.UserRole;
 import com.company.project.service.DeviceBasicInfoService;
 import com.company.project.service.DeviceLendService;
+import com.company.project.service.UserRoleService;
 import com.company.project.service.UserService;
 import com.company.project.vo.DeviceLendInfoVo;
 import com.company.project.vo.DeviceScrapInfoVo;
@@ -30,6 +32,8 @@ public class DeviceLendController {
     private DeviceBasicInfoService deviceBasicInfoService;
     @Resource
     private DeviceLendMapper deviceLendMapper;
+    @Resource
+    private UserRoleService userRoleService;
 
 
     @PostMapping("/add")
@@ -83,18 +87,37 @@ public class DeviceLendController {
 
     @GetMapping("returnDevice")
     public Result returnDevice(@RequestParam Integer userId, @RequestParam Integer deviceId) {
-        DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
-        if (deviceBasicInfo == null)
-            return ResultGenerator.genFailResult("设备不存在！");
-        if (deviceBasicInfo.getIsLended() == 0)
-            return ResultGenerator.genFailResult("设备尚未被借出！");
-        deviceBasicInfo.setIsLended(0);
-        deviceBasicInfoService.update(deviceBasicInfo);
-        List<DeviceLend> deviceLends = deviceLendMapper.selectsByUserIdAndDeviceId(userId, deviceId);
-        for (DeviceLend deviceLend : deviceLends) {
-            deviceLend.setIsDeleted(1);
-            deviceLendService.update(deviceLend);
+        UserRole userRole = userRoleService.findBy("userId", userId);
+        if (userRole.getRoleId() == 1) {
+            // 管理员
+            DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
+            if (deviceBasicInfo == null)
+                return ResultGenerator.genFailResult("设备不存在！");
+            if (deviceBasicInfo.getIsLended() == 0)
+                return ResultGenerator.genFailResult("设备尚未被借出！");
+            DeviceLend deviceLend = deviceLendService.findBy("deviceId", deviceId);
+            if (deviceLend == null)
+                return ResultGenerator.genFailResult("设备尚未被借出！");
+            deviceBasicInfo.setIsLended(0);
+            deviceBasicInfoService.update(deviceBasicInfo);
+            deviceLendMapper.delete(deviceLend);
+            return ResultGenerator.genSuccessResult();
+        } else {
+            DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
+            if (deviceBasicInfo == null)
+                return ResultGenerator.genFailResult("设备不存在！");
+            if (deviceBasicInfo.getIsLended() == 0)
+                return ResultGenerator.genFailResult("设备尚未被借出！");
+            List<DeviceLend> deviceLends = deviceLendMapper.selectsByUserIdAndDeviceId(userId, deviceId);
+            if (deviceLends == null || deviceLends.size() == 0) {
+                return ResultGenerator.genFailResult("你尚未借出该设备");
+            }
+            deviceBasicInfo.setIsLended(0);
+            deviceBasicInfoService.update(deviceBasicInfo);
+            for (DeviceLend deviceLend : deviceLends) {
+                deviceLendMapper.delete(deviceLend);
+            }
+            return ResultGenerator.genSuccessResult();
         }
-        return ResultGenerator.genSuccessResult();
     }
 }

@@ -10,6 +10,11 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -55,7 +60,23 @@ public class DeviceMaintainController {
 
     @GetMapping("/startMaintainDevice")
     public Result startMaintainDevice(@RequestParam Integer deviceId, @RequestParam Integer userId) {
-        return deviceMaintainService.startMaintainDevice(userId, deviceId);
+        return deviceMaintainService.startMaintainDevice(userId, deviceId, null, null);
+    }
+
+    @GetMapping("/startMaintainDevice1")
+    public Result startMaintainDevice1(@RequestParam Integer deviceId, @RequestParam Integer userId, @RequestParam String maintainStartDate, @RequestParam String maintainEndDate) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+        Date startDate = simpleDateFormat.parse(maintainStartDate);
+        Date endDate = simpleDateFormat.parse(maintainEndDate);
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(startDate);
+        calendar.add(Calendar.HOUR, +8);
+        startDate = calendar.getTime();
+        calendar = new GregorianCalendar();
+        calendar.setTime(endDate);
+        calendar.add(Calendar.HOUR, +8);
+        endDate = calendar.getTime();
+        return deviceMaintainService.startMaintainDevice(userId, deviceId, startDate, endDate);
     }
 
     @GetMapping("/stopMaintainDevice")

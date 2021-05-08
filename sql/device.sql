@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80023
 File Encoding         : 65001
 
-Date: 2021-04-08 17:16:31
+Date: 2021-04-27 20:41:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,9 +37,9 @@ CREATE TABLE `device_basic_info` (
 -- ----------------------------
 -- Records of device_basic_info
 -- ----------------------------
-INSERT INTO `device_basic_info` VALUES ('2', 'zk', 'adsfsd', '0', '1', '1', null, '2021-03-16 13:43:33', '2021-03-31 09:36:15', '0', '0');
-INSERT INTO `device_basic_info` VALUES ('3', '手机', 'f5e0033e-2c59-4b67-9ce7-bad29e3db264', '1', '1', '0', 'ceshi', '2021-03-16 18:40:21', '2021-04-03 11:59:32', '0', '1');
-INSERT INTO `device_basic_info` VALUES ('4', '电脑', 'e62a5b95-b7e8-4549-8f1f-14962ec86fdd', '1', '2', '0', '测试用', '2021-03-17 09:55:04', '2021-04-03 11:59:33', '1', '0');
+INSERT INTO `device_basic_info` VALUES ('2', 'zk', 'adsfsd', '1', '1', '1', null, '2021-03-16 13:43:33', '2021-03-31 09:36:15', '1', '0');
+INSERT INTO `device_basic_info` VALUES ('3', '手机', 'f5e0033e-2c59-4b67-9ce7-bad29e3db264', '1', '1', '0', 'ceshi', '2021-03-16 18:40:21', '2021-04-03 11:59:32', '1', '0');
+INSERT INTO `device_basic_info` VALUES ('4', '电脑', 'e62a5b95-b7e8-4549-8f1f-14962ec86fdd', '1', '2', '0', '测试用', '2021-03-17 09:55:04', '2021-04-03 11:59:33', '0', '0');
 INSERT INTO `device_basic_info` VALUES ('5', '平板', '05a01bcd-00eb-4f23-a20b-439d02d58860', '1', '1', '0', 'aaa', '2021-03-17 18:24:53', '2021-04-03 11:59:35', '0', '0');
 
 -- ----------------------------
@@ -56,21 +56,27 @@ CREATE TABLE `device_lend` (
   `detail` longtext NOT NULL COMMENT '借出详情',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+  `is_deleted` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of device_lend
 -- ----------------------------
-INSERT INTO `device_lend` VALUES ('1', '3', '2', '2021-03-17 12:27:10', '2021-03-17 12:27:13', '2021-03-17 12:27:15', '无', '2021-03-17 12:27:20', '2021-03-17 12:27:20');
-INSERT INTO `device_lend` VALUES ('2', '3', '2', '2021-03-29 21:25:31', null, null, 'a', '2021-03-29 21:25:31', '2021-03-29 21:25:31');
-INSERT INTO `device_lend` VALUES ('7', '2', '1', '2021-03-31 09:49:03', null, null, '', '2021-03-31 09:49:03', '2021-03-31 09:49:03');
-INSERT INTO `device_lend` VALUES ('8', '3', '1', '2021-03-31 09:49:56', null, null, '', '2021-03-31 09:49:56', '2021-03-31 09:49:56');
-INSERT INTO `device_lend` VALUES ('9', '4', '1', '2021-03-31 09:54:09', null, null, '', '2021-03-31 09:54:09', '2021-03-31 09:54:09');
-INSERT INTO `device_lend` VALUES ('10', '3', '1', '2021-04-01 14:45:08', null, null, '', '2021-04-01 14:45:08', '2021-04-01 14:45:08');
-INSERT INTO `device_lend` VALUES ('11', '3', '1', '2021-04-01 15:27:09', null, null, '', '2021-04-01 15:27:09', '2021-04-01 15:27:09');
-INSERT INTO `device_lend` VALUES ('12', '5', '1', '2021-04-01 15:28:12', null, null, '', '2021-04-01 15:28:12', '2021-04-01 15:28:12');
-INSERT INTO `device_lend` VALUES ('13', '3', '1', '2021-04-02 09:34:50', null, null, '', '2021-04-02 09:34:50', '2021-04-02 09:34:50');
+INSERT INTO `device_lend` VALUES ('1', '3', '2', '2021-03-17 12:27:10', '2021-03-17 12:27:13', '2021-03-17 12:27:15', '无', '2021-03-17 12:27:20', '2021-04-27 19:02:26', '1');
+INSERT INTO `device_lend` VALUES ('2', '3', '2', '2021-03-29 21:25:31', null, null, 'a', '2021-03-29 21:25:31', '2021-04-27 19:02:27', '1');
+INSERT INTO `device_lend` VALUES ('7', '2', '1', '2021-03-31 09:49:03', null, null, '', '2021-03-31 09:49:03', '2021-04-27 19:02:31', '1');
+INSERT INTO `device_lend` VALUES ('8', '3', '1', '2021-03-31 09:49:56', null, null, '', '2021-03-31 09:49:56', '2021-04-27 19:02:32', '1');
+INSERT INTO `device_lend` VALUES ('9', '4', '1', '2021-03-31 09:54:09', null, null, '', '2021-03-31 09:54:09', '2021-03-31 09:54:09', '1');
+INSERT INTO `device_lend` VALUES ('10', '3', '1', '2021-04-01 14:45:08', null, null, '', '2021-04-01 14:45:08', '2021-04-27 19:02:34', '1');
+INSERT INTO `device_lend` VALUES ('11', '3', '1', '2021-04-01 15:27:09', null, null, '', '2021-04-01 15:27:09', '2021-04-27 19:02:35', '1');
+INSERT INTO `device_lend` VALUES ('12', '5', '1', '2021-04-01 15:28:12', null, null, '', '2021-04-01 15:28:12', '2021-04-27 19:02:36', '1');
+INSERT INTO `device_lend` VALUES ('13', '3', '1', '2021-04-02 09:34:50', null, null, '', '2021-04-02 09:34:50', '2021-04-27 19:02:37', '1');
+INSERT INTO `device_lend` VALUES ('14', '2', '1', '2021-04-27 18:57:55', null, null, '', '2021-04-27 18:57:55', '2021-04-27 19:02:43', '0');
+INSERT INTO `device_lend` VALUES ('15', '3', '1', '2021-04-27 19:06:07', null, null, '', '2021-04-27 19:06:07', '2021-04-27 19:06:07', '1');
+INSERT INTO `device_lend` VALUES ('16', '3', '1', '2021-04-27 19:06:09', null, null, '', '2021-04-27 19:06:09', '2021-04-27 19:06:09', '1');
+INSERT INTO `device_lend` VALUES ('17', '3', '1', '2021-04-27 19:06:10', null, null, '', '2021-04-27 19:06:10', '2021-04-27 19:06:10', '1');
+INSERT INTO `device_lend` VALUES ('18', '3', '1', '2021-04-27 19:06:10', null, null, '', '2021-04-27 19:06:10', '2021-04-27 19:06:10', '0');
 
 -- ----------------------------
 -- Table structure for device_maintain
@@ -87,7 +93,7 @@ CREATE TABLE `device_maintain` (
   `status` varchar(255) NOT NULL COMMENT '当前维护状态。',
   `is_deleted` int NOT NULL DEFAULT '0' COMMENT '是否删除。0-未删除，1-已删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of device_maintain
@@ -98,7 +104,11 @@ INSERT INTO `device_maintain` VALUES ('13', '3', '1', '2021-04-03 16:37:16', '20
 INSERT INTO `device_maintain` VALUES ('14', '4', '1', '2021-04-03 16:37:21', '2021-04-03 16:37:21', '2021-04-03 16:37:21', '2021-04-03 16:37:21', '已结束', '1');
 INSERT INTO `device_maintain` VALUES ('15', '2', '1', '2021-04-03 16:37:49', '2021-04-03 16:37:49', '2021-04-03 16:37:49', '2021-04-03 16:37:49', '已结束', '1');
 INSERT INTO `device_maintain` VALUES ('16', '2', '1', '2021-04-05 14:07:26', '2021-04-05 14:07:26', '2021-04-05 14:07:26', '2021-04-05 14:07:26', '已结束', '1');
-INSERT INTO `device_maintain` VALUES ('17', '2', '1', '2021-04-05 14:07:28', '2021-04-05 14:07:28', '2021-04-05 14:07:28', '2021-04-05 14:07:28', '维护中', '0');
+INSERT INTO `device_maintain` VALUES ('17', '2', '1', '2021-04-05 14:07:28', '2021-04-05 14:07:28', '2021-04-05 14:07:28', '2021-04-05 14:07:28', '已结束', '1');
+INSERT INTO `device_maintain` VALUES ('18', '3', '1', '2021-04-15 11:55:56', '2021-04-15 11:55:56', '2021-04-15 11:55:56', '2021-04-15 11:55:56', '已结束', '1');
+INSERT INTO `device_maintain` VALUES ('19', '2', '1', '2021-04-27 16:31:10', '2021-04-27 16:31:10', '2021-04-27 16:31:10', '2021-04-27 16:31:10', '已结束', '1');
+INSERT INTO `device_maintain` VALUES ('20', '2', '1', '2021-04-27 16:42:03', '2021-04-27 16:42:03', '2021-04-27 16:42:03', '2021-04-27 16:42:03', '维护中', '0');
+INSERT INTO `device_maintain` VALUES ('21', '3', '1', '2021-04-27 16:42:04', '2021-04-27 16:42:04', '2021-04-27 16:42:04', '2021-04-27 16:42:04', '已结束', '1');
 
 -- ----------------------------
 -- Table structure for device_reserve
@@ -108,18 +118,17 @@ CREATE TABLE `device_reserve` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `device_id` int NOT NULL COMMENT '设备ID',
   `reserve_user_id` int NOT NULL COMMENT '预约用户ID',
-  `reserve_time` timestamp NOT NULL COMMENT '预定时间',
+  `reserve_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '预定时间',
   `expect_return_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '预计归还时间',
   `detail` longtext NOT NULL COMMENT '预定详情',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of device_reserve
 -- ----------------------------
-INSERT INTO `device_reserve` VALUES ('1', '3', '2', '2021-03-17 14:45:13', '2021-03-17 14:45:16', '测试', '2021-03-17 14:45:20', '2021-03-17 14:45:20');
 
 -- ----------------------------
 -- Table structure for device_scrap
@@ -134,7 +143,7 @@ CREATE TABLE `device_scrap` (
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   `detail` longtext CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '报废的理由',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of device_scrap
@@ -142,6 +151,8 @@ CREATE TABLE `device_scrap` (
 INSERT INTO `device_scrap` VALUES ('1', '3', '2', '2021-03-17 10:50:37', '2021-03-17 10:50:40', '2021-03-17 10:50:40', '无');
 INSERT INTO `device_scrap` VALUES ('2', '5', '1', '2021-04-03 11:51:02', '2021-04-03 11:51:02', '2021-04-03 11:51:02', null);
 INSERT INTO `device_scrap` VALUES ('3', '4', '1', '2021-04-03 16:54:04', '2021-04-03 16:54:04', '2021-04-03 16:54:04', null);
+INSERT INTO `device_scrap` VALUES ('4', '2', '1', '2021-04-27 16:31:14', '2021-04-27 16:31:14', '2021-04-27 16:31:14', null);
+INSERT INTO `device_scrap` VALUES ('5', '4', '1', '2021-04-27 16:57:30', '2021-04-27 16:57:30', '2021-04-27 16:57:30', null);
 
 -- ----------------------------
 -- Table structure for laboratory_info
@@ -163,6 +174,23 @@ CREATE TABLE `laboratory_info` (
 -- Records of laboratory_info
 -- ----------------------------
 INSERT INTO `laboratory_info` VALUES ('1', '实验室一', '2', '21B', '无', '0', '2021-03-17 15:27:40', '2021-03-17 15:27:40');
+
+-- ----------------------------
+-- Table structure for laboratory_location
+-- ----------------------------
+DROP TABLE IF EXISTS `laboratory_location`;
+CREATE TABLE `laboratory_location` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `lab_id` int NOT NULL COMMENT '实验室ID',
+  `longitude` double NOT NULL COMMENT '经度',
+  `latitude` double NOT NULL COMMENT '纬度',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of laboratory_location
+-- ----------------------------
+INSERT INTO `laboratory_location` VALUES ('1', '1', '100.365', '57.963');
 
 -- ----------------------------
 -- Table structure for permission_info
@@ -193,7 +221,7 @@ CREATE TABLE `role_info` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role_info
@@ -201,6 +229,7 @@ CREATE TABLE `role_info` (
 INSERT INTO `role_info` VALUES ('1', 'admin', '2021-03-17 16:12:04', '2021-03-17 16:12:04');
 INSERT INTO `role_info` VALUES ('2', 'aa', '2021-03-17 18:29:28', '2021-03-17 18:29:28');
 INSERT INTO `role_info` VALUES ('3', '学生', '2021-03-17 19:18:37', '2021-03-17 19:18:37');
+INSERT INTO `role_info` VALUES ('4', '访客', '2021-04-25 16:25:27', '2021-04-25 16:25:27');
 
 -- ----------------------------
 -- Table structure for role_permission
@@ -234,7 +263,7 @@ CREATE TABLE `sys_token` (
 -- ----------------------------
 -- Records of sys_token
 -- ----------------------------
-INSERT INTO `sys_token` VALUES ('1', '1', '2021-04-09 03:07:57', 'e99776e40b513185b5696c9d1504f513', '2021-04-08 15:07:57');
+INSERT INTO `sys_token` VALUES ('1', '1', '2021-04-26 04:53:25', 'c96ea41cbc7f0c9e77e47a880803134d', '2021-04-25 16:53:25');
 
 -- ----------------------------
 -- Table structure for test

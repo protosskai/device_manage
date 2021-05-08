@@ -13,7 +13,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by CodeGenerator on 2021/03/13.
@@ -74,4 +76,16 @@ public class UserController {
         userInfo.setName("Super Admin");
         return ResultGenerator.genSuccessResult(userInfo);
     }
+
+    @GetMapping("/queryId")
+    public Result queryId(@RequestParam String userName) {
+        User user = userService.findBy("userName", userName);
+        if (user == null)
+            return ResultGenerator.genFailResult("用户不存在");
+        Map<String, Object> result = new HashMap<>();
+        result.put("userId", user.getId());
+        return ResultGenerator.genSuccessResult(result);
+    }
+
+
 }

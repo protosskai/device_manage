@@ -5,6 +5,8 @@ import com.company.project.model.DeviceMaintain;
 import com.company.project.core.Service;
 import com.company.project.vo.DeviceMaintainInfoVo;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.List;
 
 
@@ -16,7 +18,7 @@ public interface DeviceMaintainService extends Service<DeviceMaintain> {
 
     public List<DeviceMaintainInfoVo> getMaintainList(Integer querySelect);
 
-    public Result startMaintainDevice(Integer userId, Integer deviceId);
+    public Result startMaintainDevice(Integer userId, Integer deviceId, Date startDate, Date endDate);
 
     public Result stopMaintainDevice(Integer userId, Integer deviceId);
 }

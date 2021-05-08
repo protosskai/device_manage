@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Param;
 public interface DeviceReserveMapper extends Mapper<DeviceReserve> {
 
     void deleteByUserIdAndDeviceId(@Param("userId") Integer userId, @Param("deviceId") Integer deviceId);
+    void deleteByDeviceId(@Param("deviceId") Integer deviceId);
 }

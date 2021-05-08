@@ -6,9 +6,11 @@ import com.company.project.dao.DeviceMaintainMapper;
 import com.company.project.model.DeviceBasicInfo;
 import com.company.project.model.DeviceMaintain;
 import com.company.project.model.User;
+import com.company.project.model.UserRole;
 import com.company.project.service.DeviceBasicInfoService;
 import com.company.project.service.DeviceMaintainService;
 import com.company.project.core.AbstractService;
+import com.company.project.service.UserRoleService;
 import com.company.project.service.UserService;
 import com.company.project.vo.DeviceMaintainInfoVo;
 import com.google.common.base.Preconditions;
@@ -16,8 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -35,6 +39,8 @@ public class DeviceMaintainServiceImpl extends AbstractService<DeviceMaintain> i
     private UserService userService;
     @Resource
     private DeviceMaintainService deviceMaintainService;
+    @Resource
+    private UserRoleService userRoleService;
 
     @Override
     public DeviceMaintainInfoVo getDeviceMaintainVo(DeviceMaintain maintain) {
@@ -100,7 +106,7 @@ public class DeviceMaintainServiceImpl extends AbstractService<DeviceMaintain> i
     }
 
     @Override
-    public Result startMaintainDevice(Integer userId, Integer deviceId) {
+    public Result startMaintainDevice(Integer userId, Integer deviceId, Date startDate, Date endDate) {
         DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
         if (deviceBasicInfo == null)
             return ResultGenerator.genFailResult("设备不存在！");
@@ -116,28 +122,53 @@ public class DeviceMaintainServiceImpl extends AbstractService<DeviceMaintain> i
         deviceMaintain.setMaintainUserId(userId);
         deviceMaintain.setStatus("维护中");
         deviceMaintain.setIsDeleted(0);
+        if (startDate != null)
+            deviceMaintain.setStartTime(startDate);
+        if (endDate != null)
+            deviceMaintain.setFinishTime(endDate);
         deviceMaintainService.save(deviceMaintain);
         return ResultGenerator.genSuccessResult();
     }
 
     @Override
     public Result stopMaintainDevice(Integer userId, Integer deviceId) {
-        DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
-        if (deviceBasicInfo == null)
-            return ResultGenerator.genFailResult("设备不存在！");
-        if (deviceBasicInfo.getIsMaintain() == 0)
-            return ResultGenerator.genFailResult("当前设备尚未处于维护状态");
-        User user = userService.findById(userId);
-        if (user == null)
-            return ResultGenerator.genFailResult("用户不存在！");
-        deviceBasicInfo.setIsMaintain(0);
-        deviceBasicInfoService.update(deviceBasicInfo);
-        List<DeviceMaintain> preDeviceMaintains = deviceMaintainMapper.selectByDeviceIdAndUserId(deviceId, userId);
-        for (DeviceMaintain maintain : preDeviceMaintains) {
-            maintain.setIsDeleted(1);
-            maintain.setStatus("已结束");
-            deviceMaintainService.update(maintain);
+        UserRole userRole = userRoleService.findBy("userId", userId);
+        if (userRole.getRoleId() == 1) {
+            // 管理员
+            DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
+            if (deviceBasicInfo == null)
+                return ResultGenerator.genFailResult("设备不存在！");
+            if (deviceBasicInfo.getIsMaintain() == 0)
+                return ResultGenerator.genFailResult("当前设备尚未处于维护状态");
+            DeviceMaintain preDeviceMaintain = this.findBy("deviceId", deviceId);
+            if (preDeviceMaintain == null)
+                return ResultGenerator.genFailResult("设备尚未被借出！");
+            deviceBasicInfo.setIsMaintain(0);
+            deviceBasicInfoService.update(deviceBasicInfo);
+            deviceMaintainMapper.delete(preDeviceMaintain);
+            return ResultGenerator.genSuccessResult();
+        } else {
+            DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
+            if (deviceBasicInfo == null)
+                return ResultGenerator.genFailResult("设备不存在！");
+            if (deviceBasicInfo.getIsMaintain() == 0)
+                return ResultGenerator.genFailResult("当前设备尚未处于维护状态");
+            User user = userService.findById(userId);
+            if (user == null)
+                return ResultGenerator.genFailResult("用户不存在！");
+            List<DeviceMaintain> preDeviceMaintains = deviceMaintainMapper.selectByDeviceIdAndUserId(deviceId, userId);
+            if (preDeviceMaintains == null || preDeviceMaintains.size() == 0) {
+                return ResultGenerator.genFailResult("你尚未维护该设备");
+            }
+            deviceBasicInfo.setIsMaintain(0);
+            deviceBasicInfoService.update(deviceBasicInfo);
+            for (DeviceMaintain maintain : preDeviceMaintains) {
+//                maintain.setIsDeleted(1);
+//                maintain.setStatus("已结束");
+//                deviceMaintainService.update(maintain);
+                deviceMaintainMapper.delete(maintain);
+            }
+            return ResultGenerator.genSuccessResult();
         }
-        return ResultGenerator.genSuccessResult();
     }
 }

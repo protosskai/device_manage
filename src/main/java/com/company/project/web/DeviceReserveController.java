@@ -11,7 +11,9 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by CodeGenerator on 2021/03/13.
@@ -64,7 +66,18 @@ public class DeviceReserveController {
 
     @GetMapping("/startReverse")
     public Result startReverse(@RequestParam Integer userId, @RequestParam Integer deviceId) {
-        return deviceReserveService.startReverseDevice(userId, deviceId);
+        return deviceReserveService.startReverseDevice(userId, deviceId, null);
+    }
+
+    @GetMapping("/startReverse1")
+    public Result startReverse1(@RequestParam Integer userId, @RequestParam Integer deviceId, @RequestParam String reverseDate) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+        Date date = simpleDateFormat.parse(reverseDate);
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(Calendar.HOUR, +20);
+        date = calendar.getTime();
+        return deviceReserveService.startReverseDevice(userId, deviceId, date);
     }
 
     @GetMapping("/stopReverse")
