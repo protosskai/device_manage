@@ -27,9 +27,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/add")
-    public Result add(User user) {
-        userService.save(user);
-        return ResultGenerator.genSuccessResult();
+    public Result add(@RequestBody UserInfoVo userInfoVo) {
+        return userService.addUser(userInfoVo);
     }
 
     @PostMapping("/delete")

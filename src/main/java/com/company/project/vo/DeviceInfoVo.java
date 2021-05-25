@@ -7,14 +7,42 @@ public class DeviceInfoVo {
     private String deviceName;
     // 设备负责人
     private String principalUser;
+    private String principalUserAlias;
     // 是否正在维护
     private int isMaintain;
     // 是否废弃
     private int isScraped;
+    private int isReverse;
+    private int isLended;
     // 设备详情
     private String detail;
     private String createTime;
     private String uuid;
+
+    public int getIsReverse() {
+        return isReverse;
+    }
+
+
+    public void setIsReverse(int isReverse) {
+        this.isReverse = isReverse;
+    }
+
+    public String getPrincipalUserAlias() {
+        return principalUserAlias;
+    }
+
+    public void setPrincipalUserAlias(String principalUserAlias) {
+        this.principalUserAlias = principalUserAlias;
+    }
+
+    public int getIsLended() {
+        return isLended;
+    }
+
+    public void setIsLended(int isLended) {
+        this.isLended = isLended;
+    }
 
     public String getDetail() {
         return detail;

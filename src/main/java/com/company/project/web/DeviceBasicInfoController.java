@@ -63,17 +63,6 @@ public class DeviceBasicInfoController {
         List<DeviceInfoVo> voList = new ArrayList<>();
         for (DeviceBasicInfo info : list) {
             DeviceInfoVo infoVo = deviceBasicInfoService.infoToVo(info);
-//            String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(info.getCreateTime());
-//            infoVo.setCreateTime(createTime);
-//            infoVo.setId(info.getId());
-//            infoVo.setDeviceName(info.getDeviceName());
-//            infoVo.setIsScraped(info.getIsScraped());
-//            infoVo.setIsScraped(info.getIsScraped());
-//            infoVo.setUuid(info.getUuid());
-//            User user = userService.findById(info.getPrincipalUserId());
-//            if (user != null) {
-//                infoVo.setPrincipalUser(user.getUserName());
-//            }
             voList.add(infoVo);
         }
         PageInfo pageInfo = new PageInfo(voList);

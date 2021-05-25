@@ -3,12 +3,31 @@ package com.company.project.vo;
 public class UserInfoVo {
     private int id;
     private String userAlias;
+    private String userName;
     private String role;
     private int sex;
     private String phone;
     private String wechat;
     private String qq;
     private String createTime;
+    private String password;
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
     public int getId() {
         return id;

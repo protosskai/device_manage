@@ -1,5 +1,7 @@
 package com.company.project.service.impl;
 
+import com.company.project.core.Result;
+import com.company.project.core.ResultGenerator;
 import com.company.project.dao.LaboratoryInfoMapper;
 import com.company.project.model.LaboratoryInfo;
 import com.company.project.model.User;
@@ -42,7 +44,7 @@ public class LaboratoryInfoServiceImpl extends AbstractService<LaboratoryInfo> i
             String detail = laboratoryInfo.getDetail();
             User user = userService.findById(laboratoryInfo.getPrincipalUserId());
             Preconditions.checkNotNull(user, "给定的用户ID[" + laboratoryInfo.getPrincipalUserId() + "]不存在相应的用户");
-            principalUser = user.getUserName();
+            principalUser = user.getUserAlias();
             LabInfoVo infoVo = new LabInfoVo();
             infoVo.setId(id);
             infoVo.setLabName(labName);
@@ -52,5 +54,21 @@ public class LaboratoryInfoServiceImpl extends AbstractService<LaboratoryInfo> i
             res.add(infoVo);
         }
         return res;
+    }
+
+    @Override
+    public Result addLab(LabInfoVo labInfoVo) {
+        LaboratoryInfo laboratoryInfo = this.findBy("labName", labInfoVo.getLabName());
+        if (laboratoryInfo != null) {
+            return ResultGenerator.genFailResult("实验室名已存在！");
+        }
+        laboratoryInfo = new LaboratoryInfo();
+        laboratoryInfo.setLabName(labInfoVo.getLabName());
+        int userId = userService.queryIdByAlias(labInfoVo.getPrincipalUser());
+        laboratoryInfo.setPrincipalUserId(userId);
+        laboratoryInfo.setRegion(labInfoVo.getRegion());
+        laboratoryInfo.setDetail(labInfoVo.getDetail());
+        this.save(laboratoryInfo);
+        return ResultGenerator.genSuccessResult();
     }
 }

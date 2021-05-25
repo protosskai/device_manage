@@ -33,7 +33,7 @@ public class DeviceBasicInfoServiceImpl extends AbstractService<DeviceBasicInfo>
         deviceBasicInfo.setIsMaintain(deviceInfoVo.getIsMaintain());
         deviceBasicInfo.setIsScraped(deviceInfoVo.getIsScraped());
         deviceBasicInfo.setDetail(deviceInfoVo.getDetail());
-        User user = userService.findBy("userName", deviceInfoVo.getPrincipalUser());
+        User user = userService.findBy("userAlias", deviceInfoVo.getPrincipalUser());
         if (user != null) {
             deviceBasicInfo.setPrincipalUserId(user.getId());
         }
@@ -51,11 +51,14 @@ public class DeviceBasicInfoServiceImpl extends AbstractService<DeviceBasicInfo>
         infoVo.setId(info.getId());
         infoVo.setDeviceName(info.getDeviceName());
         infoVo.setIsScraped(info.getIsScraped());
-        infoVo.setIsScraped(info.getIsScraped());
+        infoVo.setIsMaintain(info.getIsMaintain());
+        infoVo.setIsLended(info.getIsLended());
+        infoVo.setIsReverse(info.getIsReverse());
         infoVo.setUuid(info.getUuid());
         User user = userService.findById(info.getPrincipalUserId());
         if (user != null) {
             infoVo.setPrincipalUser(user.getUserName());
+            infoVo.setPrincipalUserAlias(user.getUserAlias());
         }
         return infoVo;
     }

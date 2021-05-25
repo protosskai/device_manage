@@ -92,7 +92,8 @@ public class DeviceLendServiceImpl extends AbstractService<DeviceLend> implement
     @Override
     public Boolean checkDeviceAvailable(Integer deviceId) {
         DeviceBasicInfo deviceBasicInfo = deviceBasicInfoService.findById(deviceId);
-        if (deviceBasicInfo.getIsLended() == 1)
+        // 已经借出或被预定或已废弃
+        if (deviceBasicInfo.getIsLended() == 1 || deviceBasicInfo.getIsReverse() == 1 || deviceBasicInfo.getIsScraped() == 1)
             return false;
         return true;
     }
