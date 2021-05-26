@@ -41,7 +41,7 @@ public class AdminController {
         Integer roleId = null;
         if (userRole == null) {
             // 访客
-            roleId = 4;
+            return ResultGenerator.genFailResult("用户角色不存在");
         } else {
             roleId = userRole.getRoleId();
         }

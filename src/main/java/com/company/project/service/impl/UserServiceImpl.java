@@ -4,7 +4,11 @@ import com.company.project.core.Result;
 import com.company.project.core.ResultGenerator;
 import com.company.project.dao.UserMapper;
 import com.company.project.model.LaboratoryInfo;
+import com.company.project.model.RoleInfo;
 import com.company.project.model.User;
+import com.company.project.model.UserRole;
+import com.company.project.service.RoleInfoService;
+import com.company.project.service.UserRoleService;
 import com.company.project.service.UserService;
 import com.company.project.core.AbstractService;
 import com.company.project.vo.LabInfoVo;
@@ -27,6 +31,10 @@ import java.util.List;
 public class UserServiceImpl extends AbstractService<User> implements UserService {
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private UserRoleService userRoleService;
+    @Resource
+    private RoleInfoService roleInfoService;
 
     @Override
     public List<UserInfoVo> getUserInfoVoList(Integer querySelect) {
@@ -61,6 +69,10 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         if (user != null) {
             return ResultGenerator.genFailResult("用户名已存在！");
         }
+        RoleInfo roleInfo = roleInfoService.findBy("roleName", userInfoVo.getRole());
+        if (roleInfo == null) {
+            return ResultGenerator.genFailResult("角色不存在！");
+        }
         user = new User();
         user.setUserName(userInfoVo.getUserName());
         user.setRole(userInfoVo.getRole());
@@ -71,6 +83,12 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         user.setWechat(userInfoVo.getWechat());
         user.setQq(userInfoVo.getQq());
         this.save(user);
+        // 设置用户角色映射
+        user = this.findBy("userName", userInfoVo.getUserName());
+        UserRole userRole = new UserRole();
+        userRole.setUserId(user.getId());
+        userRole.setRoleId(roleInfo.getId());
+        userRoleService.save(userRole);
         return ResultGenerator.genSuccessResult();
     }
 
